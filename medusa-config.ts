@@ -3,6 +3,21 @@ import { Modules } from "@medusajs/framework/utils";
 
 loadEnv(process.env.NODE_ENV || "development", process.cwd());
 
+const plugins = [
+  // ...
+  {
+    resolve: "@medusajs/admin",
+    /** @type {import('@medusajs/admin').PluginOptions} */
+    options: {
+      // only enable `serve` in development
+      // you may need to add the NODE_ENV variable
+      // manually
+      serve: process.env.NODE_ENV === "development",
+      // other options...
+    },
+  },
+];
+
 module.exports = defineConfig({
   projectConfig: {
     databaseUrl: process.env.DATABASE_URL,
@@ -14,6 +29,7 @@ module.exports = defineConfig({
       cookieSecret: process.env.COOKIE_SECRET || "supersecret",
     },
   },
+  plugins: plugins,
   modules: [
     // ...
     {
